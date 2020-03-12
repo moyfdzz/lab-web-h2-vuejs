@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Lab</title>
+    <title>Vue.js Lab</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -9,133 +9,72 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">Biblioteca</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav>
-
-    <div class="container">
-        <h1>Container</h1>
-    </div>
-
-    <div class="jumbotron text-center">
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand" href="#">Biblioteca</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    
         <div class="container">
-            <h1 class="display-3">Libros disponibles</h1>
+            <h1>Container</h1>
+        </div>
+    
+        <div class="jumbotron text-center">
+            <div class="container">
+                <h1 class="display-3">Libros disponibles</h1>
+            </div>
+        </div>
+    
+        <div class="list">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4" v-for="book in books">
+                        <div class="card mb-4 box-shadow">
+                            <h3 class="title">{{ book.title }}</h3>
+                            <div class="col-md-7 image-container mx-auto">
+                                <img class="img-thumbnail card-img-top" v-bind:src="book.imageURL" alt="">
+                            </div>
+                            <p class="publisher">Publicado por: <em>{{ book.username }}</em></p>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group mx-auto">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Información</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Separar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary my-4 dispBtn" v-on:click="displayAdd">Agregar libro</button>
+
+        <div class="input ml-4 mt-4" v-if="willAdd">
+            <h2>Agregar un libro</h2>
+            <div>
+                <label for="title">Título: </label>
+                <input v-model="title" @keyup.enter="addBook">
+            </div>
+            <div>
+                <label for="imageURL">URL de la imagen: </label>
+                <input v-model="imageURL" @keyup.enter="addBook">
+            </div>
+            <div>
+                <label for="username">Usuario: </label>
+                <input v-model="username" @keyup.enter="addBook">
+            </div>
+            <button class="btn btn-primary my-4" v-on:click="addBook">Agregar</button>
         </div>
     </div>
-
-    <form class="form-inline mt-2 mt-md-1 justify-content-center margin-bottom-xl mb-4">
-        <input class="form-control mr-sm-2 mr-auto" type="text" placeholder="Buscar libro" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-      </form>
-
-      <div class="container">
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <h3>Los juegos del hambre</h3>
-                    <div class="col-md-7 image-container mx-auto">
-                        <img class="img-thumbnail card-img-top" src="https://images-na.ssl-images-amazon.com/images/I/71VrtQU9VBL.jpg" alt="">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group mx-auto">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Información</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Separar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <h3>Don Quijote de la Mancha</h3>
-                    <div class="col-md-7 image-container mx-auto">
-                        <img class="img-thumbnail card-img-top" src="https://imagessl5.casadellibro.com/a/l/t5/45/9788466236645.jpg" alt="">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group mx-auto">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Información</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Separar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <h3>El principito</h3>
-                    <div class="col-md-7 image-container mx-auto">
-                        <img class="img-thumbnail card-img-top" src="https://www.elsotano.com/imagenes_grandes/9786073/978607317672.JPG" alt="">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group mx-auto">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Información</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Separar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <h3>El hobbit</h3>
-                    <div class="col-md-7 image-container mx-auto">
-                        <img class="img-thumbnail card-img-top" src="https://www.planetadelibros.com/usuaris/libros/fotos/281/m_libros/portada_el-hobbit-ilustrado_j-r-r-tolkien_201901161606.jpg" alt="">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group mx-auto">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Información</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Separar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <h3>Cien años de soledad</h3>
-                    <div class="col-md-7 image-container mx-auto">
-                        <img class="img-thumbnail card-img-top" src="https://imagessl8.casadellibro.com/a/l/t5/08/9788497592208.jpg" alt="">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group mx-auto">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Información</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Separar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <h3>Las aventuras de Pinocho</h3>
-                    <div class="col-md-7 image-container mx-auto">
-                        <img class="img-thumbnail card-img-top" src="https://www.anayainfantilyjuvenil.com/images/libros/grande/las-aventuras-de-pinocho-libros-regalo.jpg" alt="">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group mx-auto">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Información</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Separar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          
-        </div>
-      </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
